@@ -1,3 +1,5 @@
 module.exports.index = (req, res) => {
-    res.render('Client/Pages/Home/Products/index')
+    res.render('Client/Pages/Products/index', {
+        titlePage: "Danh sách sản phẩm",
+    })
 }
