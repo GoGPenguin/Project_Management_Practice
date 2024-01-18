@@ -9,6 +9,8 @@ const port = process.env.PORT
 app.set('views', './Views')
 app.set('view engine', 'pug')
 
+app.use(express.static("public"))
+
 // Routes
 route(app)
 
