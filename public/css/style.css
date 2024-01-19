@@ -1,3 +1,84 @@
-.test {
-    color: RED
+/* header */
+.header {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
 }
+
+.header .inner-logo img {
+    max-height: 50px;
+    max-width: 100%px;
+}
+
+.header .inner-menu > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.header .inner-menu > ul > li {
+    margin-left: 20px;
+}
+/* end-header */
+
+/* footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+/* end-footer */
+
+.container.my-3 {
+    padding: 20px;
+  }
+  
+  .box-head {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  h2.inner-title {
+    color: #007bff; /* Bootstrap primary color */
+  }
+  
+  .product-item {
+    border: 1px solid #dee2e6; /* Bootstrap border color */
+    border-radius: 5px;
+    padding: 15px;
+  }
+  
+  .inner-image img {
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .inner-content {
+    text-align: center;
+  }
+  
+  .inner-title {
+    margin-bottom: 10px;
+  }
+  
+  .inner-price-new {
+    color: #28a745; /* Bootstrap success color */
+    font-weight: bold;
+  }
+  
+  .inner-price-old {
+    color: #dc3545; /* Bootstrap danger color */
+    text-decoration: line-through;
+  }
+  
+  .inner-discount {
+    color: #ffc107; /* Bootstrap warning color */
+    font-weight: bold;
+  }
+  
