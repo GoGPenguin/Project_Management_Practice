@@ -1,6 +1,11 @@
 html a{
     text-decoration: none;
 }
+
+.header {
+    background: #323232;
+    height: 72px;
+}
 .header .inner-logo a {
     font-size: 24px;
     font-weight: 700;
