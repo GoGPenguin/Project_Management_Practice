@@ -36,3 +36,20 @@ if (searchForm) {
     })
 }
 
+const paginationBtn = document.querySelectorAll("[button-pagination]")
+
+if (paginationBtn.length) {
+    let url = new URL(window.location.href)
+
+    paginationBtn.forEach(button => {
+        button.addEventListener("click", () => {
+            const page = button.getAttribute("button-pagination")
+
+            url.searchParams.set("page", page)
+
+            window.location.href = url.href
+        })
+})
+}
+
+
