@@ -4,6 +4,7 @@ const filterStatusHelper = require('../../helper/filterStatus')
 const searchHelper = require('../../helper/search')
 const paginationHelper = require('../../helper/pagination')
 
+// [GET] /admin/products
 module.exports.products = async (req, res) => {
 
 
@@ -39,3 +40,12 @@ module.exports.products = async (req, res) => {
     })
 }
 
+// [GET] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => { 
+    const status = req.params.status
+    const id = req.params.id
+
+    await Product.updateOne({ _id: id }, { status: status })
+
+    res.redirect('back');
+}

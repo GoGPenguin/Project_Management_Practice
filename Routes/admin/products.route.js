@@ -5,4 +5,6 @@ const controller = require('../../Controllers/admin/products.controller')
 
 router.get('/', controller.products)
 
+router.patch('/change-status/:status/:id', controller.changeStatus)
+
 module.exports = router;
