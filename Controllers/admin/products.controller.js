@@ -48,6 +48,8 @@ module.exports.changeStatus = async (req, res) => {
 
     await Product.updateOne({ _id: id }, { status: status })
 
+    req.flash('success', 'Cập nhật trạng thái thành công')
+
     res.redirect('back');
 }
 
@@ -65,7 +67,10 @@ module.exports.changeMulti = async (req, res) => {
             await Product.updateOne({ _id: id }, { position: parseInt(position) })
         }
     }
-    else await Product.updateMany({ _id: { $in: ids } }, {status: type})
+    else {
+        await Product.updateMany({ _id: { $in: ids } }, {status: type})
+        req.flash('success', `Cập nhật trạng thái thành công của ${ids.length} sản phẩm`)
+    }
 
     res.redirect('back');
 }

@@ -106,7 +106,7 @@ if (formchangeMulti) {
 
                 if (typeChange == "change-position") {
                     const position = input.closest("tr").querySelector("input[name='position']").value;
-                    
+
                     const complexId = `${id}-${position}`
                     ids.push(complexId)
                 } else {
@@ -122,5 +122,18 @@ if (formchangeMulti) {
             alert("Vui lòng chọn ít nhất 1")
         }
 
+    })
+}
+
+const showAlert = document.querySelector('[show-alert]')
+if (showAlert) {
+    const time = showAlert.getAttribute("data-time")
+    setTimeout(() => {
+        showAlert.classList.add("alert-hidden")
+    }, parseInt(time))
+
+    const closeAlert = showAlert.querySelector('[close-alert]')
+    closeAlert.addEventListener("click", () => {
+        showAlert.classList.add("alert-hidden")
     })
 }
