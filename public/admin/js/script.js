@@ -6,11 +6,10 @@ if (buttons.length) {
     buttons.forEach(button => {
         button.addEventListener("click", () => {
             const status = button.getAttribute("button-status");
-            
+
             if (status) {
                 url.searchParams.set("status", status)
-            }
-            else url.searchParams.delete("status")
+            } else url.searchParams.delete("status")
 
             window.location.href = url.href
 
@@ -18,7 +17,7 @@ if (buttons.length) {
     })
 }
 
-const searchForm = document.querySelector('#form-search') 
+const searchForm = document.querySelector('#form-search')
 
 if (searchForm) {
     let url = new URL(window.location.href)
@@ -29,8 +28,7 @@ if (searchForm) {
 
         if (keyword) {
             url.searchParams.set("keyword", keyword)
-        }
-        else url.searchParams.delete("keyword")
+        } else url.searchParams.delete("keyword")
 
         window.location.href = url.href
     })
@@ -49,7 +47,7 @@ if (paginationBtn.length) {
 
             window.location.href = url.href
         })
-})
+    })
 }
 
 const checkboxMulti = document.querySelector('[checkbox-multi]')
@@ -63,8 +61,7 @@ if (checkboxMulti) {
             inputsId.forEach(input => {
                 input.checked = true
             })
-        }
-        else {
+        } else {
             inputsId.forEach(input => {
                 input.checked = false
             })
@@ -77,8 +74,7 @@ if (checkboxMulti) {
 
             if (count == inputsId.length) {
                 inputCheckAll.checked = true
-            }
-            else inputCheckAll.checked = false
+            } else inputCheckAll.checked = false
         })
     })
 }
@@ -104,24 +100,27 @@ if (formchangeMulti) {
         if (inputsChecked.length > 0) {
             let ids = []
             const inputIds = formchangeMulti.querySelector("input[name='ids']")
-            
+
             inputsChecked.forEach(input => {
                 const id = input.value
-                ids.push(id)
+
+                if (typeChange == "change-position") {
+                    const position = input.closest("tr").querySelector("input[name='position']").value;
+                    
+                    const complexId = `${id}-${position}`
+                    ids.push(complexId)
+                } else {
+                    ids.push(id)
+                }
+
             })
 
             inputIds.value = ids.join(", ")
 
             formchangeMulti.submit();
-        }
-        else {
+        } else {
             alert("Vui lòng chọn ít nhất 1")
         }
 
     })
 }
-
-
-
-
-

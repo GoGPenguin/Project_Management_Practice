@@ -28,6 +28,7 @@ module.exports.products = async (req, res) => {
 
     const data = await Product
         .find(find)
+        .sort({ position: "desc" })
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip);
 
@@ -57,6 +58,12 @@ module.exports.changeMulti = async (req, res) => {
 
     if (type == "delete-all") {
         await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deletedAt: new Date() })
+    }
+    else if (type == "change-position") {
+        for (const item of ids) {
+            let [id, position] = item.split('-')
+            await Product.updateOne({ _id: id }, { position: parseInt(position) })
+        }
     }
     else await Product.updateMany({ _id: { $in: ids } }, {status: type})
 
