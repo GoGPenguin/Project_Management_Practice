@@ -60,12 +60,14 @@ module.exports.changeMulti = async (req, res) => {
 
     if (type == "delete-all") {
         await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deletedAt: new Date() })
+        req.flash('success', `Xóa thành công ${ids.length} sản phẩm`)
     }
     else if (type == "change-position") {
         for (const item of ids) {
             let [id, position] = item.split('-')
             await Product.updateOne({ _id: id }, { position: parseInt(position) })
         }
+        req.flash('success', `Cập nhật trạng thái thành công của ${ids.length} sản phẩm`)
     }
     else {
         await Product.updateMany({ _id: { $in: ids } }, {status: type})
@@ -84,6 +86,7 @@ module.exports.deleteItem = async (req, res) => {
         deleted: true, 
         deletedAt: new Date()
     })
+    req.flash('success', `Cập nhật trạng thái thành công sản phẩm`)
 
     res.redirect('back');
 }
