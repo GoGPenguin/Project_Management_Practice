@@ -7,8 +7,8 @@ block main
     h1.mb-4 #{titlePage}
 
     form(
-        action=`${prefixAdmin}/products/create`
-        id="form-create-product"
+        action=`${prefixAdmin}/products/edit/${item.id}?_method=PATCH`
+        id="form-edit-product"
         method="POST"
         enctype="multipart/form-data"
     )
@@ -19,16 +19,18 @@ block main
                 class="form-control"
                 id="title"
                 name="title"
+                value=item.title
                 required 
             )
         div(class="form-group")
-            label(for="desc") Tiêu đề
+            label(for="desc") Mô tả
             textarea(
                 class="form-control"
                 id="desc"
                 name="descreiption"
                 rows="5"
-            )
+                value=item.description
+            ) #{item.description}
         div(class="form-group")
             label(for="price") Giá
             input(
@@ -36,8 +38,8 @@ block main
                 class="form-control"
                 id="price"
                 name="price"
-                value="0"
                 min="0"
+                value=item.price
             )
         div(class="form-group")
             label(for="discount") % Giảm giá
@@ -46,8 +48,8 @@ block main
                 class="form-control"
                 id="discount"
                 name="discountPercentage"
-                value="0"
                 min="0"
+                value = item.discountPercentage
             )
         div(class="form-group")
             label(for="stock") Số lượng
@@ -56,7 +58,7 @@ block main
                 class="form-control"
                 id="stock"
                 name="stock"
-                value="0"
+                value=item.stock
                 min="0"
             )
         div(
@@ -73,7 +75,7 @@ block main
                 upload-image-input
             )
             img(
-                src=""
+                src=item.thumbnail
                 upload-image-preview
                 class="image-preview"
             )
@@ -86,6 +88,7 @@ block main
                 name="position"
                 placeholder="Tự động tăng"
                 min="1"
+                value = item.position
             )
         div(
             class="form-group form-check form-check-inline"
@@ -96,7 +99,7 @@ block main
                 id="statusActive"
                 name="status"
                 value="active"
-                checked
+                checked = (item.status == 'active') ? true : false
             )
             label(for="statusInActive" class="form-check-label") Hoạt động
         div(
@@ -108,12 +111,13 @@ block main
                 id="statusInActive"
                 name="status"
                 value="inactive"
+                checked = (item.status == 'inactive') ? true : false
             )
             label(for="statusInActive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Tạo mới
+            ) Cập nhật
 
     script(src="/admin/js/product.js") 

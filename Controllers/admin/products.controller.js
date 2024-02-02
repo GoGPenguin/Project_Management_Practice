@@ -5,6 +5,7 @@ const filterStatusHelper = require('../../helper/filterStatus')
 const searchHelper = require('../../helper/search')
 const paginationHelper = require('../../helper/pagination')
 
+
 // [GET] /admin/products
 module.exports.products = async (req, res) => {
 
@@ -123,6 +124,8 @@ module.exports.create = async (req, res) => {
     })
 }
 
+
+
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
     req.body.price = parseInt(req.body.price)
@@ -136,10 +139,60 @@ module.exports.createPost = async (req, res) => {
         req.body.position = parseInt(req.body.position)
     }
 
-    req.body.thumbnail = `/uploads/${req.file.filename}`
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+
 
     const product = new Product(req.body)
     product.save()
+
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
+}
+
+// [GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const find = {
+            deleted: false,
+            _id: req.params.id
+        }
+        const item = await Product.findOne(find)
+
+        if (item == null) {
+            req.flash('error', 'Không tồn tại sản phẩm')
+            res.redirect(`${systemConfig.prefixAdmin}/products`)
+        }
+        res.render("admin/pages/products/edit", {
+            titlePage: "Chỉnh sửa sản phẩm",
+            item: item
+        })
+    } catch (error) {
+        req.flash('error', 'Không tồn tại sản phẩm')
+        res.redirect(`${systemConfig.prefixAdmin}/products`)
+    }
+
+}
+
+// [PATCH] /admin/products/create
+module.exports.editPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    req.body.position = parseInt(req.body.position)
+
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+
+    try {
+        await Product.updateOne({
+            _id: req.params.id
+        }, req.body)
+        req.flash('success', 'Cập nhật thành công')
+    } catch (err) {
+        req.flash('error', 'Cập nhật không thành công')
+    }
 
     res.redirect(`${systemConfig.prefixAdmin}/products`)
 }
