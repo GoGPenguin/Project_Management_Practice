@@ -33,5 +33,6 @@ router.patch(
     createPost,
     controller.editPost)
 
+router.get('/detail/:id', controller.detail)
 
 module.exports = router;

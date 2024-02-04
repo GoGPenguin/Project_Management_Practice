@@ -23,3 +23,16 @@ module.exports.index = async (req, res) => {
         data: data,
     })
 }
+
+// [GET] /products/:[slug]
+module.exports.detail = async (req, res) => {
+    const product = await Product.findOne({ 
+        slug: req.params.slug,
+        deleted: false
+    })
+
+    res.render('Client/Pages/Products/detail.pug', {
+        titlePage: "Chi tiết sản phẩm",
+        product: product,
+    })
+}
