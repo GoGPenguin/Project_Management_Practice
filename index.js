@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 
-app.set('views', './Views')
+app.set('views', `${__dirname}/View`)
 app.set('view engine', 'pug')
 
 app.use(cookieParser('keyboard cat'))
@@ -35,7 +35,9 @@ app.use(session({
 }))
 app.use(flash())
 
-app.use(express.static("public"))
+app.use(express.static(`${__dirname}/public`))
+
+
 
 // Routes
 route(app)
