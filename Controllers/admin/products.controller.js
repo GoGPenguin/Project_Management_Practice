@@ -27,12 +27,15 @@ module.exports.products = async (req, res) => {
 
     const objectPagination = paginationHelper(req.query, countProducts)
 
+    let sort = {}
+
+    if (req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue
+    } else sort.position = "desc"
 
     const data = await Product
         .find(find)
-        .sort({
-            position: "desc"
-        })
+        .sort(sort)
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip);
 
@@ -139,7 +142,7 @@ module.exports.createPost = async (req, res) => {
         req.body.position = parseInt(req.body.position)
     }
 
-    
+
 
     const product = new Product(req.body)
     product.save()

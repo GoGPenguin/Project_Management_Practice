@@ -151,3 +151,33 @@ if (uploadImage) {
         }
     })
 }
+
+const sortDiv = document.querySelector("[sort]")
+
+if (sortDiv) {
+    const sortChange = sortDiv.querySelector('[sort-select]')
+    const sortClear = sortDiv.querySelector('[sort-clear]')
+    let url = new URL(window.location.href)
+    sortChange.addEventListener('change', (e) => {
+        const [sortKey, sortValue] = e.target.value.split('-')
+        url.searchParams.set('sortKey', sortKey)
+        url.searchParams.set('sortValue', sortValue)
+        window.location.href = url
+    })
+
+    sortClear.addEventListener('click', () => {
+        url = new URL(window.location.href)
+        url.searchParams.delete('sortKey')
+        url.searchParams.delete('sortValue')
+        window.location.href = url
+    })
+
+    const sortKey = url.searchParams.get('sortKey')
+    const sortValue = url.searchParams.get('sortValue')
+
+    if (sortKey && sortValue) {
+        const stringSort = `${sortKey}-${sortValue}`
+        const optionSelected = sortChange.querySelector(`option[value='${stringSort}']`)
+        optionSelected.selected = true
+    }
+}
