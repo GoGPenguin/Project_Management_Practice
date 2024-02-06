@@ -1,0 +1,36 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert-success(3000)
+    +alert-error(3000)
+
+    h1.mb-4 #{titlePage}
+
+        form(
+        action = `${prefixAdmin}/roles/edit/${item.id}?_method=PATCH`
+        method='POST'
+    )
+            .form-group 
+                label(for='title') Tiêu đề
+                input(
+                    type='text'
+                    class='form-control'
+                    id='title'
+                    name='title'
+                    value=item.title
+                    required
+                )
+            .form-group 
+                label(for='title') Mô tả
+                textarea(
+                    type='text'
+                    class='form-control'
+                    id='desc'
+                    name='description'
+                ) #{item.description}
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Chỉnh sửa
