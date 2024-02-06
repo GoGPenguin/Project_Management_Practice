@@ -22,4 +22,17 @@ router.post(
     createCategory,
     controller.createCategory)
 
+router.get(
+    '/edit/:id',
+    controller.edit
+)
+
+router.patch(
+    '/edit/:id',
+    upload.single('thumbnail'),
+    middlewareUpload.upload,
+    createCategory, 
+    controller.editCategory
+)
+
 module.exports = router;
