@@ -18,4 +18,12 @@ router.post(
     middlewareUpload.upload,
     controller.createAccount)
 
+router.get('/edit/:id', controller.edit)
+
+router.patch(
+    '/edit/:id', 
+    upload.single('avatar'),
+    middlewareUpload.upload,
+    controller.editAccount)
+
 module.exports = router;

@@ -57,5 +57,52 @@ module.exports.createAccount = async (req, res) => {
     }
 
 
-    
+
+}
+
+// [GET] /admin/accounts/edit/:id
+module.exports.edit = async (req, res) => {
+    let find = {
+        deleted: false,
+        _id: req.params.id
+    }
+
+    const record = await Account.findOne(find)
+
+    const roles = await Role.find({
+        deleted: false
+    })
+
+    res.render(`admin/pages/accounts/edit`, {
+        titlePage: 'Accounts',
+        record: record,
+        roles: roles
+    })
+
+
+}
+
+// [PATCH] /admin/accounts/edit/:id
+module.exports.editAccount = async (req, res) => {
+    const emailExist = await Account.findOne({
+        _id: { $ne: req.params.id },
+        email: req.body.email,
+        deleted: false
+    })
+
+    if (emailExist) {
+        req.flash('error', 'Đã tồn tại email')
+    }
+    else {
+        if (req.body.password)
+        req.body.password = md5(req.body.password)
+        else delete req.body.password
+        await Account.updateOne({
+            _id: req.params.id
+        }, req.body)
+
+        req.flash('success', "Thành công")
+    }
+
+    res.redirect(`back`)
 }
