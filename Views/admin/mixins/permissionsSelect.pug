@@ -1,0 +1,33 @@
+mixin permissions-select(type) 
+    tr
+        td(colspan='4')
+            b.text-uppercase #{type}
+    tr(data-name=`${type}_view`)
+        td Xem 
+        each item in records
+            td.text-center
+                input(
+                    type="checkbox"
+
+                    )
+    tr(data-name=`${type}_create`)
+        td Thêm mới
+        each item in records
+            td.text-center
+                input(type="checkbox")
+    tr(data-name=`${type}_edit`)
+        td Chỉnh sửa 
+        each item in records
+            td.text-center
+                input(type="checkbox")
+    tr(data-name=`${type}_delete`)
+        td Xóa 
+        each item in records
+            td.text-center
+                input(type="checkbox")
+    - if (type == 'roles') 
+        tr(data-name=`${type}_roles`)
+            td Roles
+            each item in records
+                td.text-center
+                    input(type="checkbox")
