@@ -3,37 +3,39 @@ include ../../mixins/selectTree.pug
 
 
 block main 
-    h1 #{titlePage}
+    if (role.permissions.includes('categories_view'))
+        h1 #{titlePage}
 
-    .card.mb-3 
-        .card-header Danh sách sản phẩm 
-        .card-body 
-            .row 
-                .col-8 
-                    
-                .col-4 
-                    a(
-                        href=`${prefixAdmin}/categories/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm mới
+        .card.mb-3 
+            .card-header Danh sách sản phẩm 
+            .card-body 
+                .row 
+                    .col-8 
+                        
+                    .col-4 
+                        if (role.permissions.includes('categories_create'))
+                            a(
+                                href=`${prefixAdmin}/categories/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới
 
-            table(
-                class="table table-hover table-sm"
-                checkbox-multi
-            )
-                thead 
-                    tr  
-                        th 
-                            input(type="checkbox" name="checkall")
-                        th STT 
-                        th Image 
-                        th Title 
-                        th Position
-                        th Status 
-                        th Action 
-                tbody 
-                    +table-tree(categories)
+                table(
+                    class="table table-hover table-sm"
+                    checkbox-multi
+                )
+                    thead 
+                        tr  
+                            th 
+                                input(type="checkbox" name="checkall")
+                            th STT 
+                            th Image 
+                            th Title 
+                            th Position
+                            th Status 
+                            th Action 
+                    tbody 
+                        +table-tree(categories)
 
 
 
-    script(src="/admin/js/product.js") 
+        script(src="/admin/js/product.js") 

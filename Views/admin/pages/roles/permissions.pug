@@ -3,64 +3,69 @@ include ../../mixins/alert.pug
 include ../../mixins/permissionsSelect.pug
 
 block main 
-    h1.mb-4 #{titlePage}
+    if (role.permissions.includes('roles_view'))
 
-    +alert-success(3000)
+        h1.mb-4 #{titlePage}
 
-    if (records)
-        div(data-records=records)
-        
-        .text-right 
-            button(
-                type='submit'
-                class='btn btn-primary mb-3'
-                button-submit
-            ) Cập nhật 
+        +alert-success(3000)
 
-        table.table.table-hover.table-sm(
-            table-permissions
-        )
-            thead 
-                tr
-                    th Tính năng
-                    each item in records
-                        th.text-center #{item.title}
-            tbody 
-                tr.d-none(data-name='id')
-                    td 
-                    each item in records 
-                        td.text-center
-                            input(
-                                type='text'
-                                value=item.id
-                            )
-                //- Danh mục sản phẩm
-                +permissions-select('categories')
+        if (records)
+            div(data-records=records)
+            
+            .text-right 
+                button(
+                    type='submit'
+                    class='btn btn-primary mb-3'
+                    button-submit
+                ) Cập nhật 
 
-                //- Sản phẩm
-                +permissions-select('products')
-
-                //- Role
-                +permissions-select('roles')
-    else 
-        a(
-            href=`${prefixAdmin}/roles/create`
-            class="btn btn-outline-success"
-        ) + Thêm mới
-
-    form(
-        id='form-change-permissions'
-        method="POST"
-        action=`${prefixAdmin}/roles/permissions?_method=PATCH`
-    )
-        .form-group 
-            input.form-control(
-                type='text'
-                name='permissions'
-                hidden
+            table.table.table-hover.table-sm(
+                table-permissions
             )
+                thead 
+                    tr
+                        th Tính năng
+                        each item in records
+                            th.text-center #{item.title}
+                tbody 
+                    tr.d-none(data-name='id')
+                        td 
+                        each item in records 
+                            td.text-center
+                                input(
+                                    type='text'
+                                    value=item.id
+                                )
+                    //- Danh mục sản phẩm
+                    +permissions-select('categories')
 
-    script(src="/admin/js/role.js") 
-                                
+                    //- Sản phẩm
+                    +permissions-select('products')
 
-    
+                    //- Role
+                    +permissions-select('roles')
+
+                    //- Account
+                    +permissions-select('accounts')
+        else 
+            a(
+                href=`${prefixAdmin}/roles/create`
+                class="btn btn-outline-success"
+            ) + Thêm mới
+
+        form(
+            id='form-change-permissions'
+            method="POST"
+            action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+        )
+            .form-group 
+                input.form-control(
+                    type='text'
+                    name='permissions'
+                    hidden
+                )
+
+        script(src="/admin/js/role.js") 
+                                    
+
+        
