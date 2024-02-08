@@ -5,9 +5,13 @@ const Account = require('../../models/account.model')
 const md5 = require('md5')
 
 module.exports.login = (req, res) => {
-    res.render('admin/pages/auth/login', {
-        titlePage: "LOGIN",
-    })
+    if (req.cookies.token) {
+        res.redirect(`${prefixAdmin}/dashboard`)
+    } else {
+        res.render('admin/pages/auth/login', {
+            titlePage: "LOGIN",
+        })
+    }
 }
 
 // [POST] /admin/auth/login
@@ -37,4 +41,10 @@ module.exports.loginAccount = async (req, res) => {
     res.cookie('token', user.token)
     res.redirect(`${prefixAdmin}/dashboard`)
 
+}
+
+module.exports.logout = (req, res) => {
+    res.clearCookie('token')
+    res.redirect(`${prefixAdmin}/auth/login`)
+    res.end()
 }
