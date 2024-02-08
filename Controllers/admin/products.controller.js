@@ -89,7 +89,10 @@ module.exports.changeMulti = async (req, res) => {
             }
         }, {
             deleted: true,
-            deletedAt: new Date()
+            deletedBy: {
+                account_id: res.locals.user.id,
+                deletedAt: new Date()
+            }
         })
         req.flash('success', `Xóa thành công ${ids.length} sản phẩm`)
     } else if (type == "change-position") {
@@ -125,7 +128,10 @@ module.exports.deleteItem = async (req, res) => {
         _id: id
     }, {
         deleted: true,
-        deletedAt: new Date()
+        deletedBy: {
+            account_id: res.locals.user.id,
+            deletedAt: new Date()
+        }
     })
     req.flash('success', `Cập nhật trạng thái thành công sản phẩm`)
 
