@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 
 block main 
     if (role.permissions.includes('products_view'))
@@ -52,6 +53,7 @@ block main
                             th Price 
                             th Position
                             th Status 
+                            th Người tạo
                             th Action 
                     tbody 
 
@@ -98,7 +100,11 @@ block main
                                             button-change-status
                                             class="badge bg-danger"
                                         ) Dừng hoạt động
-                                td  
+                                td 
+                                    p #{item.accountFullName}
+                                    if (item.createdBy.createdAt) 
+                                        +formatDateTime(item.createdBy.createdAt)
+                                td
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}`
                                         class="btn btn-secondary btn-sm"

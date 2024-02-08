@@ -1,5 +1,6 @@
 const Product = require('../../models/product.model')
 const Category = require('../../models/category.model')
+const Account = require('../../models/account.model')
 const systemConfig = require('../../config/system')
 
 const filterStatusHelper = require('../../helper/filterStatus')
@@ -40,6 +41,16 @@ module.exports.products = async (req, res) => {
         .sort(sort)
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip);
+
+    for (const it of data) {
+        const user = await Account.findOne({
+            _id: it.createdBy.account_id
+        })
+
+        if (user) {
+            it.accountFullName = user.fullName
+        }
+    }
 
     res.render('admin/pages/products/index', {
         titlePage: "PRODUCTS",
@@ -149,7 +160,9 @@ module.exports.createPost = async (req, res) => {
         req.body.position = parseInt(req.body.position)
     }
 
-
+    req.body.createdBy = {
+        account_id: res.locals.user.id,
+    }
 
     const product = new Product(req.body)
     product.save()
@@ -169,7 +182,7 @@ module.exports.edit = async (req, res) => {
         const categories = await Category.find({
             deleted: false
         })
-    
+
         const newCategories = selectTreeHelper.tree(categories)
 
         if (item == null) {
