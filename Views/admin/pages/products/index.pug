@@ -54,6 +54,7 @@ block main
                             th Position
                             th Status 
                             th Người tạo
+                            th Người cập nhật
                             th Action 
                     tbody 
 
@@ -104,6 +105,12 @@ block main
                                     p #{item.accountFullName}
                                     if (item.createdBy.createdAt) 
                                         +formatDateTime(item.createdBy.createdAt)
+                                td 
+                                    - const updatedBy = item.updatedBy.slice(-1)[0]
+                                    if (updatedBy)
+                                        p #{updatedBy.fullName}
+                                        if (updatedBy.updatedAt) 
+                                            +formatDateTime(updatedBy.updatedAt)
                                 td
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}`
