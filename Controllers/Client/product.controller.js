@@ -7,12 +7,6 @@ module.exports.index = async (req, res) => {
     })
     .sort({ position: "desc" });
 
-    const newProducts = data.map(item => {
-        item.price = (item.price * (100 - item.discountPercentage) / 100).toFixed(2)
-        return item
-        }
-    )    
-
     data.forEach(item => {
         item.priceNew = (item.price * (100 - item.discountPercentage) / 100).toFixed(2)
     })
