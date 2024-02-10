@@ -3,12 +3,20 @@ include ../../mixins/box-head.pug
 include ../../mixins/product-view.pug
 
 block main 
-    h1 Trang chủ
+    h1 #{titlePage}
 
+    - if (productsFeatured)
+        .section-products-featured.my-5
+            .container.my-3 
+                .row 
+                    .col-12 
+                        +box-head("Sản phẩm nổi bật")
+                +productView(productsFeatured)
 
-    .section-products-featured.my-5
-        .container.my-3 
-            .row 
-                .col-12 
-                    +box-head("Sản phẩm nổi bật")
-            +productView(productsFeatured)
+    - if(productsNew)
+        .section-products-featured.my-5
+            .container.my-3 
+                .row 
+                    .col-12 
+                        +box-head("Sản phẩm mới nhất")
+                +productView(productsNew)

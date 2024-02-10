@@ -5,7 +5,7 @@ mixin productView(product)
                 .product-item 
                     .inner-image 
                         img(src=item.thumbnail, alt=item.title)
-                        if (item.featured == '0')
+                        if (item.featured == '1')
                             .inner-featured Nổi bật
                     .inner-content 
                         h3.inner-title 
