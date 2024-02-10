@@ -30,9 +30,19 @@ module.exports.detail = async (req, res) => {
         deleted: false
     })
 
+    if (product.category_id) {
+        const category = await Category.findOne({
+            _id: product.category_id,
+            status: 'active',
+            deleted: false
+        })
+        product.category = category
+    }
+
+
     res.render('Client/Pages/Products/detail.pug', {
         titlePage: "Chi tiết sản phẩm",
-        product: product,
+        product: priceCalculator.priceNewProduct(product),
     })
 }
 
