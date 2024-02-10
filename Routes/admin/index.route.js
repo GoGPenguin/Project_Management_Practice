@@ -3,6 +3,7 @@ const productsRouters = require('./products.route')
 const categoriesRouters = require('./categories.route')
 const rolesRouters = require('./roles.route')
 const accountsRouters = require('./accounts.route')
+const myAccountRouters = require('./my-account.route')
 const authRouters = require('./auth.route')
 const system = require('../../config/system')
 
@@ -33,6 +34,12 @@ module.exports = (app) => {
         `${system.prefixAdmin}/roles`,
         authMiddleware.requireAuth,
         rolesRouters
+    )
+
+    app.use(
+        `${system.prefixAdmin}/my-account`,
+        authMiddleware.requireAuth,
+        myAccountRouters
     )
 
     app.use(

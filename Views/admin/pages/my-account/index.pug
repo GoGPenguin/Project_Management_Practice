@@ -1,0 +1,35 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1.mb-4 #{titlePage}
+
+    if (user.avatar)
+        img.mb-3(src=user.avatar width="150px")
+    else 
+        img.mb-3(src="/admin/images/abc.png")
+
+    if (user.fullName)
+        p Họ tên: <b>#{user.fullName}</b>
+
+    if (user.email)
+        p Email: <b>#{user.email}</b>
+
+    if (user.phone) 
+        p Phone: <b>#{user.phone}</b>
+
+    p   
+        span Trạng thái: 
+        span 
+            <b>#{user.status === 'active' ? "Hoạt động" : "Dừng hoạt động"}</b>
+
+    if (role.title)
+        p Phân quyền: <b>#{role.title}</b>
+
+    a.btn.btn-primary(
+        href=`${prefixAdmin}/my-account/edit`
+    ) Sửa thông tin
+
+
+
+
+
