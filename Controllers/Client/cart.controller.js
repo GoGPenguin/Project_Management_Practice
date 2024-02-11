@@ -78,3 +78,22 @@ module.exports.cart = async (req, res) => {
         cartDetail: cart
     })
 }
+
+// [GET] /cart/delete/:id
+module.exports.delete = async (req, res) => {
+    const cartId = req.cookies.cartId
+    const productId = req.params.id
+
+    await Cart.updateOne({
+        _id: cartId
+    }, {
+        "$pull": {
+            products: {
+                "product_id": productId
+            }
+        }
+    })
+
+    req.flash('success', 'Xóa thành công')
+    res.redirect('back')
+}
