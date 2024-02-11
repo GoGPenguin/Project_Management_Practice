@@ -31,3 +31,7 @@ header.header
                             - const pathProducts = '/products'
                             a(href="/products") Sản phẩm
                             +subMenu(layoutCategory, pathProducts)
+                        li 
+                            a(
+                                href='/cart'
+                            ) Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"})
