@@ -1,4 +1,4 @@
-mixin productView(product)
+mixin productView(product, pathProducts ='')
     .row 
         each item in product
             .col-4.mb-3 
@@ -10,7 +10,7 @@ mixin productView(product)
                     .inner-content 
                         h3.inner-title 
                             a(
-                                href=`detail/${item.slug}`
+                                href= (pathProducts == '') ? `detail/${item.slug}` : `${pathProducts}/detail/${item.slug}`
                             ) #{item.title}
                     .inner-price-new #{item.priceNew}$
                     .inner-price-old #{item.price}$

@@ -11,7 +11,7 @@ block main
                 .row 
                     .col-12 
                         +box-head("Sản phẩm nổi bật")
-                +productView(productsFeatured)
+                +productView(productsFeatured, 'products')
 
     - if(productsNew)
         .section-products-featured.my-5
@@ -19,4 +19,4 @@ block main
                 .row 
                     .col-12 
                         +box-head("Sản phẩm mới nhất")
-                +productView(productsNew)
+                +productView(productsNew, 'products')
