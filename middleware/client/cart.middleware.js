@@ -19,7 +19,6 @@ module.exports.cartId = async (req, res, next) => {
 
         res.locals.miniCart = cart
 
-        console.log(cart)
     }
 
     next()
