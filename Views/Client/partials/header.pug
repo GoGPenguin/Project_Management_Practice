@@ -35,3 +35,11 @@ header.header
                             a(
                                 href='/cart'
                             ) Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"})
+                        li 
+                            if (tokenUser)
+                                a(
+                                    href='/user/register' 
+                                ) Đăng ký
+                            //- a(
+                            //-     href='/user/register' 
+                            //- ) Đăng ký
