@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert-error(4000)
+
+    .container.my-5
+        .row.justify-content-center
+            .col-8
+                h1.text-center #{titlePage}
+                form(
+                    action='/user/login'
+                    method='POST'
+                    class='needs-validation'
+                )
+                    .form-group
+                        label(for='email' class='form-label') Email
+                        input.form-control(
+                            type="email"
+                            id='email'
+                            name='email'
+                            required
+                        )
+                        .invalid-feedback Điền địa chỉ email hợp lệ.
+
+                    .form-group.mb-3
+                        label(for='password' class='form-label') Password
+                        input.form-control(
+                            type="password"
+                            id='password'
+                            name='password'
+                            required
+                        )
+                        .invalid-feedback Điền mật khẩu của bạn.
+
+                    .form-group
+                        button.btn.btn-primary(
+                            type='submit'
+                        ) Đăng nhập
