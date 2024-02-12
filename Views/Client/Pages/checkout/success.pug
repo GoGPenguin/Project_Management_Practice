@@ -1,0 +1,63 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3
+        .row 
+            .col-12 
+                +box-head(titlePage)
+        
+        .row 
+            .col-12 
+                .alert.alert-success 
+                    | Chúc mừng bạn đã đặt hàng thành công! 
+        
+        if (orderDetail) 
+            .row 
+                .col-12 
+                    h4.mn-2 Thông tin cá nhân 
+                table.table.table-bordered 
+                    tbody 
+                        tr 
+                            td Họ tên 
+                            td 
+                                b #{orderDetail.userInfo.fullName}
+                        tr 
+                            td Số điện thoại 
+                            td 
+                                b #{orderDetail.userInfo.phone}
+                        tr 
+                            td Địa chỉ
+                            td 
+                                b #{orderDetail.userInfo.address}
+
+            .row 
+                .col-12 
+                    h4.mb-2 Thông tin đơn hàng 
+                    table.table.table-bordered 
+                        thead 
+                            tr 
+                                th STT
+                                th Ảnh
+                                th Tên
+                                th Giá
+                                th Số lượng
+                                th Tổng tiền 
+                        tbody
+                            if(orderDetail.products.length > 0)
+                                each item, index in orderDetail.products
+                                    tr 
+                                        td #{index + 1}
+                                        td 
+                                            img(
+                                                src=item.productInfo.thumbnail
+                                                alt=item.productInfo.title
+                                                width='80px'
+                                            )
+                                        td #{item.productInfo.title}
+                                        td #{item.price}$
+                                        td #{item.quantity}
+                                        td #{item.totalPrice}$
+
+                    if(orderDetail.products.length > 0)
+                        h3.text-end Tổng đơn hàng: #{orderDetail.totalPrice}$
