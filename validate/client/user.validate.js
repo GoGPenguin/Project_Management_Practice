@@ -15,8 +15,12 @@ const validateLogin = (req, res, next) => {
         return;
     }
 
-    if (!req.body.password) {
-        req.flash('error', 'Vui lòng nhập mật khẩu')
+    validateForgot(req, res, next)
+}
+
+const validateForgot = (req, res, next) => {
+    if (!req.body.email) {
+        req.flash('error', 'Vui lòng nhập email')
         res.redirect('back')
         return;
     }
@@ -26,4 +30,5 @@ const validateLogin = (req, res, next) => {
 module.exports = {
     validateRegister,
     validateLogin,
+    validateForgot,
 }

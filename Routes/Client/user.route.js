@@ -1,6 +1,10 @@
 const express = require('express')
 const router = express.Router();
-const {validateRegister, validateLogin} = require('../../validate/client/user.validate')
+const {
+    validateRegister,
+    validateLogin,
+    validateForgot
+} = require('../../validate/client/user.validate')
 
 
 const controller = require("../../Controllers/Client/user.controller")
@@ -8,7 +12,7 @@ const controller = require("../../Controllers/Client/user.controller")
 router.get('/register', controller.register)
 
 router.post(
-    '/register', 
+    '/register',
     validateRegister,
     controller.registerUser)
 
@@ -16,10 +20,18 @@ router.get('/login', controller.login)
 
 
 router.post(
-    '/login', 
+    '/login',
     validateLogin,
     controller.loginUser)
 
 router.get('/logout', controller.logout)
+
+router.get('/password/forgot', controller.forgot)
+
+router.get('/password/otp', controller.otpPassword)
+
+router.post('/password/otp', controller.otpPasswordSend)
+
+router.post('/password/forgot', validateForgot, controller.forgotPassword)
 
 module.exports = router;
