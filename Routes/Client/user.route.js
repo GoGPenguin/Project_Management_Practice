@@ -7,6 +7,9 @@ const {
     validateConfirmPassword
 } = require('../../validate/client/user.validate')
 
+const {
+    requireAuth
+} = require('../../middleware/client/auth.middleware')
 
 const controller = require("../../Controllers/Client/user.controller")
 
@@ -38,6 +41,9 @@ router.post('/password/forgot', validateForgot, controller.forgotPassword)
 router.get('/password/reset', controller.resetPassword)
 
 router.post('/password/reset', validateConfirmPassword, controller.resetPasswordUser)
+
+router.get('/info', requireAuth, controller.info)
+
 
 
 module.exports = router;
