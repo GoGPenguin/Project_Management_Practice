@@ -5,6 +5,10 @@ const {
     generateRandomNumber,
 } = require('../../helper/generate')
 
+const {
+    sendMail
+} = require('../../helper/sendMail')
+
 module.exports.register = async (req, res) => {
     res.render('Client/Pages/user/register', {
         titlePage: 'Đăng ký tài khoản',
@@ -109,6 +113,14 @@ module.exports.forgotPassword = async (req, res) => {
     const forgotPassword = new ForgotPassword(objectForgotPassword)
     await forgotPassword.save()
 
+    const subject = 'RESET PASSWORD'
+    const context = `
+       Mã OTP xác minh lấy lại mật khẩu là <b>${otp}</b>. Lưu ý không được để lộ mã OTP này
+       Thời hạn sử dụng mã là 3 phút.
+    `
+
+    sendMail(email, subject, context)
+
     res.redirect(`/user/password/otp/?email=${email}`)
 }
 
@@ -133,7 +145,7 @@ module.exports.otpPasswordSend = async (req, res) => {
         otp: otp
     })
 
-    if(!result) {
+    if (!result) {
         req.flash('error', 'OTP không hợp lệ')
         res.redirect('back')
         return
@@ -146,4 +158,26 @@ module.exports.otpPasswordSend = async (req, res) => {
     res.cookie('tokenUser', user.tokenUser)
 
     res.redirect('/user/password/reset')
+}
+
+// [GET] /user/password/reset
+module.exports.resetPassword = async (req, res) => {
+    res.render('Client/Pages/user/reset-password', {
+        titlePage: 'Đổi mật khẩu',
+    })
+}
+
+// [POST] /user/password/reset
+module.exports.resetPasswordUser = async (req, res) => {
+    const password = req.body.password
+
+    const tokenUser = req.cookies.tokenUser
+
+    await User.updateOne({
+        tokenUser: tokenUser
+    }, {
+        password: md5(password)
+    })
+
+    res.redirect('/')
 }

@@ -3,7 +3,8 @@ const router = express.Router();
 const {
     validateRegister,
     validateLogin,
-    validateForgot
+    validateForgot,
+    validateConfirmPassword
 } = require('../../validate/client/user.validate')
 
 
@@ -33,5 +34,10 @@ router.get('/password/otp', controller.otpPassword)
 router.post('/password/otp', controller.otpPasswordSend)
 
 router.post('/password/forgot', validateForgot, controller.forgotPassword)
+
+router.get('/password/reset', controller.resetPassword)
+
+router.post('/password/reset', validateConfirmPassword, controller.resetPasswordUser)
+
 
 module.exports = router;

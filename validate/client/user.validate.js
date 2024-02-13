@@ -9,8 +9,8 @@ const validateRegister = (req, res, next) => {
 }
 
 const validateLogin = (req, res, next) => {
-    if (!req.body.email) {
-        req.flash('error', 'Vui lòng nhập email')
+    if (!req.body.password) {
+        req.flash('error', 'Vui lòng nhập mật khẩu')
         res.redirect('back')
         return;
     }
@@ -27,8 +27,31 @@ const validateForgot = (req, res, next) => {
     next()
 }
 
+const validateConfirmPassword = (req, res, next) => {
+    if (!req.body.password) {
+        req.flash('error', 'Nhập mật khẩu')
+        res.redirect('back')
+        return
+    }
+
+    if (!req.body.confirmPassword) {
+        req.flash('error', 'Nhập mật khẩu xác nhận')
+        res.redirect('back')
+        return
+    }
+
+    if (req.body.confirmPassword != req.body.password) {
+        req.flash('error', 'Mật khẩu mới phải trùng với mật khẩu xác nhận')
+        res.redirect('back')
+        return
+    }
+
+    next()
+}
+
 module.exports = {
     validateRegister,
     validateLogin,
     validateForgot,
+    validateConfirmPassword
 }
