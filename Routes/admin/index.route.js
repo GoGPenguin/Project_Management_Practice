@@ -5,12 +5,14 @@ const rolesRouters = require('./roles.route')
 const accountsRouters = require('./accounts.route')
 const myAccountRouters = require('./my-account.route')
 const authRouters = require('./auth.route')
+const settingsRouters = require('./settings.route')
 const system = require('../../config/system')
 
 const authMiddleware = require('../../middleware/admin/authen.middleware')
 
 
 module.exports = (app) => {
+
 
     app.use(
         system.prefixAdmin + '/dashboard',
@@ -46,6 +48,12 @@ module.exports = (app) => {
         `${system.prefixAdmin}/accounts`,
         authMiddleware.requireAuth,
         accountsRouters
+    )
+
+    app.use(
+        `${system.prefixAdmin}/settings`,
+        authMiddleware.requireAuth,
+        settingsRouters
     )
 
     app.use(`${system.prefixAdmin}/auth`, authRouters)

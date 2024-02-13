@@ -1,0 +1,76 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main 
+    h1 #{titlePage}
+
+    +alert-error(3000)
+    +alert-success(3000)
+
+    form(
+        action=`${prefixAdmin}/settings/general?_method=PATCH`
+        method='POST'
+        enctype='multipart/form-data'
+    )
+        .form-group.mb-3
+            label(for='websiteName') Tên website
+            input.form-control(
+                type='text'
+                id='websiteName'
+                name='websiteName'
+                value= settings?settings.websiteName : ""
+            )
+        div(
+            class="form-group"
+            upload-image
+            )
+            label(for="logo") Logo
+            input(
+                type="file"
+                class="form-control-file"
+                id="logo"
+                name="logo"
+                accept="image/*"
+                upload-image-input
+            )
+            img(
+                src=settings?settings.logo : ""
+                upload-image-preview
+                class="image-preview"
+            )
+        .form-group.mb-3
+            label(for='phone') SĐT
+            input.form-control(
+                type='text'
+                id='phone'
+                name='phone'
+                value= settings?settings.phone : ""
+            )
+        .form-group 
+            label(for='email') Email
+            input.form-control(
+                type='text'
+                id='email'
+                name='email'
+                value=settings?settings.email : ""
+            )
+        .form-group 
+            label(for='address') Địa chỉ
+            input.form-control(
+                type='text'
+                id='address'
+                name='address'
+                value=settings?settings.address : ""
+            )
+        .form-group.mb-3
+            label(for='copyright') Copyright
+            input.form-control(
+                type='text'
+                id='copyright'
+                name='copyright'
+                value=settings?settings.copyright : ""
+            )
+        .form-group 
+            button.btn.btn-primary(
+                type='submit'
+            ) Cập nhật
