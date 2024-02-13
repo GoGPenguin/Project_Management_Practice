@@ -1,4 +1,5 @@
 const User = require('../../models/user.model')
+const Cart = require('../../models/cart.model')
 const ForgotPassword = require('../../models/forgot-password.model')
 const md5 = require('md5')
 const {
@@ -53,6 +54,7 @@ module.exports.login = async (req, res) => {
 module.exports.loginUser = async (req, res) => {
     const user = await User.findOne({
         email: req.body.email,
+        deleted: false
     })
 
     if (user) {
@@ -62,6 +64,11 @@ module.exports.loginUser = async (req, res) => {
                 res.redirect('back')
             } else {
                 res.cookie('tokenUser', user.tokenUser)
+                await Cart.updateOne({
+                    _id: req.cookies.cartId
+                }, {
+                    user_id: user.id
+                })
                 res.redirect('/')
             }
         } else {
