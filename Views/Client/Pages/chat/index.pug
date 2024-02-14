@@ -9,7 +9,7 @@ block main
 
         .row 
             .col-12 
-                .chat 
+                .chat(my-id=user.id)
                     .inner-body 
                         each chat in chats
                             if (chat.infoUser.id != user.id)
@@ -21,13 +21,6 @@ block main
                                 .inner-outgoing 
                                     .inner-content
                                         | #{chat.content} 
-                        //- .inner-incoming
-                        //-     .inner-name A
-                        //-     .inner-content
-                        //-         | abc 
-                        //- .inner-outgoing
-                        //-     .inner-content
-                        //-         | abc 
                     .inner-foot 
                         form.inner-form(
                             action=``
