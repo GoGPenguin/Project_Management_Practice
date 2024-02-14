@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3.chat
+        .row 
+            .col-12 
+                +box-head(titlePage)
+
+        .row 
+            .col-12 
+                .chat 
+                    .inner-body 
+                        .inner-incoming
+                            .inner-name A
+                            .inner-content
+                                | abc 
+                        .inner-outgoing 
+                            .inner-content
+                                | abc 
+                        .inner-incoming
+                            .inner-name A
+                            .inner-content
+                                | abc 
+                        .inner-outgoing
+                            .inner-content
+                                | abc 
+                    .inner-foot 
+                        form.inner-form(
+                            action=``
+                        )
+                            input(
+                                type='text'
+                                placeholder='Nhập nội dung...'
+                                name='content'
+                            )
+                            button 
+                                i.fa-solid.fa-paper-plane
+
+

@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const moment = require('moment')
 const path = require('path')
+const http = require('http');
+const { Server } = require("socket.io");
+
 
 require('dotenv').config()
 
@@ -20,6 +23,8 @@ database.connect();
 const app = express()
 const port = process.env.PORT
 
+
+
 app.use(methodOverride('_method'))
 
 app.use(bodyParser.urlencoded({
@@ -28,6 +33,14 @@ app.use(bodyParser.urlencoded({
 
 app.set('views', `${__dirname}/Views`)
 app.set('view engine', 'pug')
+
+const server = http.createServer(app);
+const io = new Server(server); 
+
+io.on('connection', (socket) => {
+  console.log('a user connected', socket.id)
+})
+
 
 app.use(cookieParser('keyboard cat'))
 app.use(session({
@@ -47,6 +60,7 @@ app.use(express.static(`${__dirname}/public`))
 route(app)
 adminRoute(app)
 
+
 //Local Var
 
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
@@ -58,6 +72,6 @@ app.get("*", (req, res) => {
   })
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`http://localhost:${port}`)
 })

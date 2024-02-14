@@ -208,3 +208,79 @@
   cursor: pointer;
 }
 
+.container.my-3.chat {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.chat {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inner-body {
+  padding: 10px;
+}
+
+.inner-incoming,
+.inner-outgoing {
+  margin-bottom: 10px;
+}
+
+.inner-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.inner-content {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.inner-incoming {
+  background-color: #f1f1f1;
+  align-self: flex-start; /* Align on the left */
+}
+
+.inner-outgoing {
+  background-color: #4CAF50;
+  color: #fff;
+  align-self: flex-end; /* Align on the right */
+}
+
+.inner-foot {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+form.inner-form {
+  display: flex;
+}
+
+input[type='text'] {
+  flex: 1;
+  padding: 8px;
+  margin-right: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
