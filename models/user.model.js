@@ -12,6 +12,14 @@ const userSchema = new mongoose.Schema({
     },
     phone: String,
     avatar: String,
+    friendList: [
+        {
+            user_id: String,
+            room_chat_id: String
+        }
+    ],
+    acceptFriend: Array,
+    request: Array,
     status: {
         type: String,
         default: 'active'

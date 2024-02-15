@@ -70,8 +70,13 @@ socket.on('Server_return_message', (data) => {
     `
 
     body.insertBefore(div, boxTyping)
-
     bodyChat.scrollTop = bodyChat.scrollHeight
+
+    const boxImage = div.querySelector('.inner-images')
+    if(boxImage) {
+        const gallery = new Viewer(boxImage)
+    }
+
 })
 
 const bodyChat = document.querySelector('.chat .inner-body')
@@ -159,4 +164,10 @@ if (elementListTyping) {
 
 
     })
+}
+
+const chatBody = document.querySelector('.chat .inner-body')
+
+if (chatBody) {
+    const gallery = new Viewer(chatBody)
 }
