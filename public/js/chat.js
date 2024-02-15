@@ -1,4 +1,8 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-image', {
+    multiple: true,
+    maxFileCount: 6
+});
 
 const formSendData = document.querySelector('.chat .inner-form')
 
@@ -6,10 +10,16 @@ if (formSendData) {
     formSendData.addEventListener('submit', (e) => {
         e.preventDefault()
         const content = e.target.elements.content.value
+        const images = upload.cachedFileArray || []
 
-        if (content != "") {
-            socket.emit('Client_send_message', content)
+
+        if (content != "" || images.length > 0) {
+            socket.emit('Client_send_message', {
+                content: content,
+                images: images
+            })
             e.target.elements.content.value = ""
+            upload.resetPreviewPanel()
             socket.emit('Client_send_typing', 'hidden')
         }
     })
@@ -23,18 +33,39 @@ socket.on('Server_return_message', (data) => {
     const boxTyping = document.querySelector('.inner-list-typing')
 
     const div = document.createElement('div')
+    let htmlContent = ""
+    let htmlFullName = ""
+    let htmlImages = ""
 
     if (myId == data.userId)
         div.classList.add('inner-outgoing')
     else {
         div.classList.add('inner-incoming')
-        div.innerHTML = `
-        <div class="inner-name">${data.fullName}</div>
+        htmlFullName = `<div class="inner-name">${data.fullName}</div>`
+    }
+
+    if (data.content) {
+        htmlContent = `
+            <div class="inner-content">${data.content}</div>
         `
     }
 
+    if (data.images) {
+        htmlImages += `<div class="inner-images">`
+
+        for (const image of data.images) {
+            htmlImages += `
+                <img src="${image}">
+            `
+        }
+        
+        htmlImages += `</div>`
+    }
+
     div.innerHTML = div.innerHTML + `
-        <div class="inner-content">${data.content}</div>
+        ${htmlFullName}
+        ${htmlContent}
+        ${htmlImages}
     `
 
     body.insertBefore(div, boxTyping)

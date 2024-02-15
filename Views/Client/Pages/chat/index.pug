@@ -17,10 +17,19 @@ block main
                                     .inner-name #{chat.infoUser.fullName}
                                     .inner-content
                                         | #{chat.content} 
+                                    if (chat.images)
+                                        .inner-images
+                                            each image in chat.images 
+                                                img(src=image)
                             else
-                                .inner-outgoing 
-                                    .inner-content
-                                        | #{chat.content} 
+                                .inner-outgoing
+                                    if (chat.content) 
+                                        .inner-content
+                                            | #{chat.content} 
+                                    if (chat.images )
+                                        .inner-images
+                                            each image in chat.images 
+                                                img(src=image)
                         .inner-list-typing
                     .inner-foot 
                         form.inner-form(
@@ -31,6 +40,7 @@ block main
                                 placeholder='Nhập nội dung...'
                                 name='content'
                             )
+                            .custom-file-container(data-upload-id="upload-image")
                             span.button-icon.btn.btn-light.mx-2 
                                 i.fa-regular.fa-face-smile
                             button 
@@ -38,5 +48,7 @@ block main
 
     .tooltip(role='tooltip')
         emoji-picker.light
+
+
 
 
