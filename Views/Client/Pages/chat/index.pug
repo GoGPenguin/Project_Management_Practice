@@ -31,6 +31,10 @@ block main
                                             each image in chat.images 
                                                 img(src=image)
                         .inner-list-typing
+
+                    .inner-preview-images
+                        .custom-file-container(data-upload-id="upload-image")
+
                     .inner-foot 
                         form.inner-form(
                             action=``
@@ -40,7 +44,8 @@ block main
                                 placeholder='Nhập nội dung...'
                                 name='content'
                             )
-                            .custom-file-container(data-upload-id="upload-image")
+                            label(for='file-upload-with-preview-upload-image').btn.btn-light.mx-2.mb-0
+                                i.fa-regular.fa-image
                             span.button-icon.btn.btn-light.mx-2 
                                 i.fa-regular.fa-face-smile
                             button 

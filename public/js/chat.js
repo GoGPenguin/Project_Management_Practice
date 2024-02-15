@@ -18,6 +18,7 @@ if (formSendData) {
                 content: content,
                 images: images
             })
+            console.log(images)
             e.target.elements.content.value = ""
             upload.resetPreviewPanel()
             socket.emit('Client_send_typing', 'hidden')
