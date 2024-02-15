@@ -1,10 +1,28 @@
 const User = require('../../models/user.model')
+const {
+    usersSocket
+} = require('../../sockets/client/users.socket')
 
 module.exports.notFriend = async (req, res) => {
-    const userId = res.locals.user
+    usersSocket(res)
+    const userId = res.locals.user.id
+    const request = await User.findOne({
+        _id: userId
+    })
+
+    // request.request.push(userId)
+
+    // request.request.push(request.acceptFriend)
 
     const users = await User.find({
-        _id: { $ne: userId },
+        $and: [
+            { _id: { $ne: userId }},
+            { _id: { $nin: request.request }},
+            { _id: { $nin: request.acceptFriend }},
+        ],
+        // _id: {
+        //     $nin: request.request
+        // },
         deleted: false,
         status: 'active'
     }).select('avatar fullName')

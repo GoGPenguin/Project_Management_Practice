@@ -403,10 +403,10 @@ button {
   display: none;
 }
 
-.box-user .add [btn-add-friend] {
+.box-user.add [btn-add-friend] {
   display: none;
 }
 
-.box-user .add [btn-cancel-friend] {
+.box-user.add [btn-cancel-friend] {
   display: inline-block;
 }
