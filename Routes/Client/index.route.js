@@ -14,6 +14,7 @@ const checkoutRouters = require('./checkout.route')
 const userRouters = require('./user.route')
 const usersRouters = require('./users.route')
 const chatRouters = require('./chat.route')
+const roomChatRouters = require('./rooms-chat.route')
 
 module.exports = (app) => {
     app.use(categoryMiddleware.category)
@@ -37,8 +38,10 @@ module.exports = (app) => {
 
     app.use("/user", userRouters)
 
-    app.use("/users", usersRouters)
+    app.use("/users", requireAuth, usersRouters)
 
     app.use("/chat", requireAuth, chatRouters)
+
+    app.use("/rooms-chat", requireAuth, roomChatRouters)
 
 }

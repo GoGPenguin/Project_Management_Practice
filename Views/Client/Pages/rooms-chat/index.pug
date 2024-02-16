@@ -1,0 +1,31 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+    .container.my-5
+        .row    
+            .col-12 
+                +box-head(titlePage)
+
+        .row.mb-3 
+            .col-12 
+                a.btn.btn-sm.btn-success.me-1(
+                    href='/rooms-chat/create'
+                ) Tạo phòng chat
+
+        .row 
+            .col-6 
+                .box-room 
+                    .inner-avatar
+                        img(
+                            src=''
+                            alt=''
+                        )
+                    .inner-info
+                        .inner-name
+                        .inner-buttons
+                            a.btn.btn-sm.btn-primary.me-1(
+                                href='#'
+                            ) Nhắn tin
+
+
