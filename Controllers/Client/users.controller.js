@@ -30,6 +30,11 @@ module.exports.notFriend = async (req, res) => {
                     $nin: request.acceptFriend
                 }
             },
+            // {
+            //     _id: {
+            //         $nin: request.friendList.user_id
+            //     }
+            // }
         ],
         // _id: {
         //     $nin: request.request

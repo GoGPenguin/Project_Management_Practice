@@ -423,6 +423,22 @@ button {
   display: none;
 }
 
+.box-user.accept [btn-accept-friend] {
+  display: none;
+}
+
+.box-user.accept [btn-refuse-friend] {
+  display: none;
+}
+
 .box-user.refuse [btn-deleted-friend] {
+  display: inline-block;
+}
+
+.box-user [btn-accepted-friend] {
+  display: none;
+}
+
+.box-user.accept [btn-accepted-friend] {
   display: inline-block;
 }

@@ -103,5 +103,51 @@ module.exports.usersSocket = async (res) => {
                 })
             }
         })
+
+        socket.on('Client_accept_add', async (userId) => {
+            const myId = res.locals.user.id
+
+            const existUserRequest = await User.findOne({
+                _id: myId,
+                acceptFriend: userId 
+            })
+
+            if (existUserRequest) {
+                await User.updateOne({
+                    _id: myId
+                }, {
+                    $pull: {
+                        acceptFriend: userId
+                    },
+                    $push: {
+                        friendList: {
+                            user_id: userId,
+                            room_chat_id: ""
+                        }
+                    }
+                })
+            }
+
+            const existUserRespond = await User.findOne({
+                _id: userId,
+                request: myId
+            })
+
+            if (existUserRespond) {
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $pull: {
+                        request: myId
+                    },
+                    $push: {
+                        friendList: {
+                            user_id: myId,
+                            room_chat_id: ""
+                        }
+                    }
+                })
+            }
+        })
     })
 }

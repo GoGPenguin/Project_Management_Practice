@@ -34,3 +34,15 @@ if (listBtnRefuse.length > 0) {
         })
     })
 }
+
+const listBtnAccept = document.querySelectorAll('[btn-accept-friend')
+if (listBtnAccept.length > 0) {
+    listBtnAccept.forEach(button => {
+        button.addEventListener('click', () => {
+            button.closest('.box-user').classList.add('accept')
+            const userId = button.getAttribute('btn-accept-friend')
+
+            socket.emit('Client_accept_add', (userId))
+        })
+    })
+}
