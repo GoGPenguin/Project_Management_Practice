@@ -22,7 +22,7 @@ block main
                             .inner-name.me-1 #{user.fullName}
                             .inner-buttons
                                 a.btn.btn-sm.btn-primary.me-1(
-                                    href='#'
+                                    href=`/chat/${user.roomChatId}`
                                 ) Nhắn tin
                         .inner-status(
                             status=user.statusOnline

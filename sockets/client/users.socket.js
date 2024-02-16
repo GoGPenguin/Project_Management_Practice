@@ -1,4 +1,5 @@
 const User = require('../../models/user.model')
+const RoomChat = require('../../models/room-chat.model')
 
 module.exports.usersSocket = async (res) => {
     _io.once('connection', (socket) => {
@@ -134,6 +135,28 @@ module.exports.usersSocket = async (res) => {
                 acceptFriend: userId
             })
 
+            const existUserRespond = await User.findOne({
+                _id: userId,
+                request: myId
+            })
+
+            let roomChat;
+
+            if (existUserRequest && existUserRespond) {
+                roomChat = new RoomChat({
+                    typeRoom: 'friends',
+                    users: [{
+                        user_id: myId,
+                        role: 'superAdmin'
+                    }, {
+                        user_id: userId,
+                        role: 'superAdmin'
+                    }]
+                })
+
+                await roomChat.save()
+            }
+
             if (existUserRequest) {
                 await User.updateOne({
                     _id: myId
@@ -144,16 +167,11 @@ module.exports.usersSocket = async (res) => {
                     $push: {
                         friendList: {
                             user_id: userId,
-                            room_chat_id: ""
+                            room_chat_id: roomChat.id
                         }
                     }
                 })
             }
-
-            const existUserRespond = await User.findOne({
-                _id: userId,
-                request: myId
-            })
 
             if (existUserRespond) {
                 await User.updateOne({
@@ -165,7 +183,7 @@ module.exports.usersSocket = async (res) => {
                     $push: {
                         friendList: {
                             user_id: myId,
-                            room_chat_id: ""
+                            room_chat_id: roomChat.id
                         }
                     }
                 })
