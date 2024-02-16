@@ -69,5 +69,39 @@ module.exports.usersSocket = async (res) => {
                 })
             }
         })
+
+        socket.on('Client_refuse_add', async (userId) => {
+            const myId = res.locals.user.id
+
+            const existUserRequest = await User.findOne({
+                _id: myId,
+                acceptFriend: userId 
+            })
+
+            if (existUserRequest) {
+                await User.updateOne({
+                    _id: myId
+                }, {
+                    $pull: {
+                        acceptFriend: userId
+                    }
+                })
+            }
+
+            const existUserRespond = await User.findOne({
+                _id: userId,
+                request: myId
+            })
+
+            if (existUserRespond) {
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $pull: {
+                        request: myId
+                    }
+                })
+            }
+        })
     })
 }
