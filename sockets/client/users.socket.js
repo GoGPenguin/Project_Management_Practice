@@ -34,6 +34,17 @@ module.exports.usersSocket = async (res) => {
                     }
                 })
             }
+
+            const infoUser = await User.findOne({
+                _id: userId
+            })
+
+            const lengthFriendAccept = infoUser.acceptFriend.length
+
+            socket.broadcast.emit('Server_return_length_accept_friend', {
+                userId,
+                lengthFriendAccept
+            })
         })
 
         socket.on('Client_cancel_add', async (userId) => {
@@ -68,6 +79,17 @@ module.exports.usersSocket = async (res) => {
                     }
                 })
             }
+
+            const infoUser = await User.findOne({
+                _id: userId
+            })
+
+            const lengthFriendAccept = infoUser.acceptFriend.length
+
+            socket.broadcast.emit('Server_return_length_accept_friend', {
+                userId,
+                lengthFriendAccept
+            })
         })
 
         socket.on('Client_refuse_add', async (userId) => {
@@ -75,7 +97,7 @@ module.exports.usersSocket = async (res) => {
 
             const existUserRequest = await User.findOne({
                 _id: myId,
-                acceptFriend: userId 
+                acceptFriend: userId
             })
 
             if (existUserRequest) {
@@ -109,7 +131,7 @@ module.exports.usersSocket = async (res) => {
 
             const existUserRequest = await User.findOne({
                 _id: myId,
-                acceptFriend: userId 
+                acceptFriend: userId
             })
 
             if (existUserRequest) {

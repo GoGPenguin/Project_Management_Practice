@@ -10,9 +10,11 @@ module.exports.notFriend = async (req, res) => {
         _id: userId
     })
 
-    // request.request.push(userId)
+    let friendList = []
 
-    // request.request.push(request.acceptFriend)
+    request.friendList.forEach(item => {
+        friendList.push(item.user_id)
+    })
 
     const users = await User.find({
         $and: [{
@@ -30,11 +32,11 @@ module.exports.notFriend = async (req, res) => {
                     $nin: request.acceptFriend
                 }
             },
-            // {
-            //     _id: {
-            //         $nin: request.friendList.user_id
-            //     }
-            // }
+            {
+                _id: {
+                    $nin: friendList
+                }
+            }
         ],
         // _id: {
         //     $nin: request.request
