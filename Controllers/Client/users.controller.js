@@ -100,3 +100,30 @@ module.exports.accept = async (req, res) => {
         users: users
     })
 }
+
+
+module.exports.friend = async (req, res) => {
+    usersSocket(res)
+    const userId = res.locals.user.id
+
+    const myUser = await User.findOne({
+        _id: userId
+    })
+
+    const friendList = myUser.friendList
+
+    const friends = friendList.map(item => item.user_id)
+
+    const users = await User.find({
+        _id: {
+            $in: friends
+        },
+        status: 'active',
+        deleted: false
+    }).select('id avatar fullName statusOnline')
+
+    res.render('Client/Pages/users/friend', {
+        titlePage: 'Bạn bè',
+        users: users
+    })
+}
