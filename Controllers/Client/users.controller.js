@@ -15,10 +15,21 @@ module.exports.notFriend = async (req, res) => {
     // request.request.push(request.acceptFriend)
 
     const users = await User.find({
-        $and: [
-            { _id: { $ne: userId }},
-            { _id: { $nin: request.request }},
-            { _id: { $nin: request.acceptFriend }},
+        $and: [{
+                _id: {
+                    $ne: userId
+                }
+            },
+            {
+                _id: {
+                    $nin: request.request
+                }
+            },
+            {
+                _id: {
+                    $nin: request.acceptFriend
+                }
+            },
         ],
         // _id: {
         //     $nin: request.request
@@ -29,6 +40,31 @@ module.exports.notFriend = async (req, res) => {
 
     res.render('Client/Pages/users/not-friend', {
         titlePage: 'Người dùng',
+        users: users
+    })
+}
+
+module.exports.request = async (req, res) => {
+    usersSocket(res)
+    const userId = res.locals.user.id
+
+    const myUser = await User.findOne({
+        _id: userId
+    })
+
+    // const request = myUser.request
+    // const acceptFriend = myUser.acceptFriend
+
+    const users = await User.find({
+        _id: {
+            $ne: userId
+        },
+        status: 'active',
+        deleted: false
+    }).select('id avatar fullName')
+
+    res.render('Client/Pages/users/request', {
+        titlePage: 'Lời mời kết bạn đã gửi',
         users: users
     })
 }

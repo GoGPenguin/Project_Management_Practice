@@ -4,17 +4,19 @@ module.exports.usersSocket = async (res) => {
     _io.once('connection', (socket) => {
         socket.on('Client_add_friend', async (userId) => {
             const myId = res.locals.user.id
-            
+
             const existUserRequest = await User.findOne({
                 _id: userId,
                 acceptFriend: myId
             })
 
-            if(!existUserRequest) {
+            if (!existUserRequest) {
                 await User.updateOne({
                     _id: userId
                 }, {
-                    $push: { acceptFriend: myId }
+                    $push: {
+                        acceptFriend: myId
+                    }
                 })
             }
 
@@ -23,11 +25,47 @@ module.exports.usersSocket = async (res) => {
                 request: userId
             })
 
-            if(!existUserRespond) {
+            if (!existUserRespond) {
                 await User.updateOne({
                     _id: myId
                 }, {
-                    $push: { request: userId }
+                    $push: {
+                        request: userId
+                    }
+                })
+            }
+        })
+
+        socket.on('Client_cancel_add', async (userId) => {
+            const myId = res.locals.user.id
+
+            const existUserRequest = await User.findOne({
+                _id: userId,
+                acceptFriend: myId
+            })
+
+            if (existUserRequest) {
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $pull: {
+                        acceptFriend: myId
+                    }
+                })
+            }
+
+            const existUserRespond = await User.findOne({
+                _id: myId,
+                request: userId
+            })
+
+            if (existUserRespond) {
+                await User.updateOne({
+                    _id: myId
+                }, {
+                    $pull: {
+                        request: userId
+                    }
                 })
             }
         })
