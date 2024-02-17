@@ -14,18 +14,19 @@ block main
                 ) Tạo phòng chat
 
         .row 
-            .col-6 
-                .box-room 
-                    .inner-avatar
-                        img(
-                            src=''
-                            alt=''
-                        )
-                    .inner-info
-                        .inner-name
-                        .inner-buttons
-                            a.btn.btn-sm.btn-primary.me-1(
-                                href='#'
-                            ) Nhắn tin
+            each room in groups
+                .col-6 
+                    .box-room 
+                        .inner-avatar
+                            img(
+                                src=room.avatar
+                                alt=room.title
+                            )
+                        .inner-info
+                            .inner-name #{room.title}
+                            .inner-buttons
+                                a.btn.btn-sm.btn-primary.me-1(
+                                    href=`/chat/${room.id}`
+                                ) Nhắn tin
 
 
